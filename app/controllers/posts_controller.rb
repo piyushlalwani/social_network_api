@@ -15,8 +15,8 @@ class PostsController < ApplicationController
 
     def create
         @post = Post.new(post_params)
-        @post.user = User.find(params[:user_id])
-        @post.group = Group.find(params[:group_id])
+        @post.user = User.find(post_params[:user_id])
+        @post.group = Group.find(post_params[:group_id])
         if @post.save
             render json: @post, status: :created
         else
@@ -27,6 +27,6 @@ class PostsController < ApplicationController
     private
 
     def post_params
-        params.require(:post).permit(:content)
+        params.require(:post).permit(:user_id, :group_id, :content)
     end
 end

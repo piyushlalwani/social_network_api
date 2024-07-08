@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
-  resources :users, only: [:index, :show, :create] do
-    resources :groups, only: [:index, :show, :create] do
-      resources :posts, only: [:index, :show, :create] do
-        resources :likes, only: [:create]
-        resources :comments, only: [:index, :create]
-      end
-    end
-    get 'feed', to: 'posts#index', as: 'feed'
+  resources :users, only: [:create, :index, :show] do
+    resources :posts, only: [:index, :create]
+  end
+
+  resources :groups, only: [:create, :index, :show] do
+    resources :posts, only: [:index, :create]
+  end
+
+  resources :posts, only: [:show, :create] do
+    resources :comments, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
   end
 end
